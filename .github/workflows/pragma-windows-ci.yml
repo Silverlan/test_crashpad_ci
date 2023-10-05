@@ -26,11 +26,12 @@ jobs:
       run: |
         chmod +x pragma_server.exe
         pragma_server.exe -log 2 2 +map "test_physics" +"lua_exec test.lua"
+        EXIT_CODE=$?
         # Check the exit code
-        if [ $? -eq 0 ]; then
+        if [ $EXIT_CODE -eq 0 ]; then
           echo "Pragma Server executed successfully."
         else
-          echo "Pragma Server execution failed with exit code $?."
+          echo "Pragma Server execution failed with exit code $EXIT_CODE."
         fi
 
     - name: Upload log_server.txt
