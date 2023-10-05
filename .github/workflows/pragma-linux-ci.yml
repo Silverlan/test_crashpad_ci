@@ -14,7 +14,7 @@ jobs:
       run: |
         curl -LO https://github.com/Silverlan/pragma/releases/download/nightly/pragma.tar.gz
         tar -xzf pragma.tar.gz
-        rm pragma.zip
+        rm pragma.tar.gz
       shell: bash
 
     - name: Create Lua Test File
