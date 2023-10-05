@@ -19,7 +19,7 @@ jobs:
 
     - name: Create Lua Test File
       run: |
-        echo 'print("Test")\nconsole.run("exit")' > pragma/lua/test.lua
+        echo 'print("Test")\nconsole.run("exit")' > lua/test.lua
       shell: bash
 
     - name: Run Pragma Server
