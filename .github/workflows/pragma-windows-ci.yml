@@ -19,9 +19,23 @@ jobs:
 
     - name: Create Lua Test File
       run: |
-        echo 'print("Test")\nconsole.run("exit")' > lua/test.lua
+        echo 'print("Test") console.run("exit")' > lua/test.lua
       shell: bash
 
-    - uses: mxschmitt/action-tmate@v3.14
-      name: CI
+    - name: Run Pragma Server
+      run: |
+        chmod +x pragma_server.exe
+        pragma_server.exe -log 2 2 +map "test_physics" +"lua_exec test.lua"
+        # Check the exit code
+        if [ $? -eq 0 ]; then
+          echo "Pragma Server executed successfully."
+        else
+          echo "Pragma Server execution failed with exit code $?."
+        fi
 
+    - name: Upload log_server.txt
+      uses: actions/upload-artifact@v2
+      with:
+        name: log_server
+        path: log_server.txt
+    
