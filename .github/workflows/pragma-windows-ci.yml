@@ -20,7 +20,7 @@ jobs:
     - name: Run Pragma Server
       run: |
         chmod +x pragma_server.exe
-        ./pragma_server.exe
+        ./pragma_server.exe +map "test_physics" +"exit"
         exit_code=$?
         if [ $exit_code -eq 0 ]; then
           echo "Pragma Server ran successfully"
