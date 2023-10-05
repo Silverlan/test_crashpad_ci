@@ -22,27 +22,6 @@ jobs:
         echo 'print("Test")\nconsole.run("exit")' > lua/test.lua
       shell: bash
 
-    - name: Run Pragma Server
-      run: |
-        chmod +x pragma_server.exe
-        ./pragma_server.exe +map "test_physics" +"lua_exec test.lua" &
-        echo "Check..."
-        # Sleep for a few seconds to give the server time to start
-        sleep 5
+    - uses: mxschmitt/action-tmate@v3.14
+      name: CI
 
-        cat log_server.txt
-        
-        # Monitor the process by its name
-        #while tasklist /FI "IMAGENAME eq pragma_server.exe" 2>NUL | find /I /N "pragma_server.exe">NUL
-        #do
-        #  # Sleep for a few seconds and continue monitoring
-        #  echo "..."
-        ##  sleep 5
-        #done
-        #echo "Done"
-
-        # Get the exit code of the process
-        #$exitCode = $LASTEXITCODE
-        #echo "Pragma Server exited with code $exitCode"
-        # You can use the exit code as needed
-      shell: bash
