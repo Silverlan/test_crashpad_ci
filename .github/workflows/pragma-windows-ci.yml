@@ -26,7 +26,7 @@ jobs:
       shell: bash
       run: |
         chmod +x pragma_server.exe
-        pragma_server.exe -log 2 2 +map "test_physics" +"lua_exec test.lua"
+        ./pragma_server.exe -log 2 2 +map "test_physics" +"lua_exec test.lua"
         EXIT_CODE=$?
         # Check the exit code
         if [ $EXIT_CODE -eq 0 ]; then
