@@ -25,7 +25,7 @@ jobs:
     - name: Run Pragma Server
       run: |
         chmod +x pragma_server.exe
-        start /B pragma_server.exe +map "test_physics" +"lua_exec test.lua"
+        cmd /c start /B pragma_server.exe +map "test_physics" +"lua_exec test.lua"
         echo "Check..."
         # Sleep for a few seconds to give the server time to start
         sleep 5
