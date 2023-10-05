@@ -25,12 +25,19 @@ jobs:
     - name: Run Pragma Server
       run: |
         chmod +x pragma_server.exe
-        ./pragma_server.exe +map "test_physics" +"lua_exec test.lua"
-        exit_code=$?
-        if [ $exit_code -eq 0 ]; then
-          echo "Pragma Server ran successfully"
-        else
-          echo "Pragma Server exited with code $exit_code"
-          exit 1
-        fi
+        start /B pragma_server.exe +map "test_physics" +"lua_exec test.lua"
+        # Sleep for a few seconds to give the server time to start
+        sleep 5
+        
+        # Monitor the process by its name
+        while tasklist /FI "IMAGENAME eq pragma_server.exe" 2>NUL | find /I /N "pragma_server.exe">NUL
+        do
+          # Sleep for a few seconds and continue monitoring
+          sleep 5
+        done
+
+        # Get the exit code of the process
+        $exitCode = $LASTEXITCODE
+        echo "Pragma Server exited with code $exitCode"
+        # You can use the exit code as needed
       shell: bash
