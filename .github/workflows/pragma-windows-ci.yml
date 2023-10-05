@@ -1,0 +1,31 @@
+name: Pragma Workflow
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Download Pragma
+      run: |
+        curl -LO https://github.com/Silverlan/pragma/releases/download/nightly/pragma.zip
+        unzip pragma.zip
+        rm pragma.zip
+      shell: bash
+
+    - name: Run Pragma Server
+      run: |
+        chmod +x pragma_server.exe
+        ./pragma_server.exe
+        exit_code=$?
+        if [ $exit_code -eq 0 ]; then
+          echo "Pragma Server ran successfully"
+        else
+          echo "Pragma Server exited with code $exit_code"
+          exit 1
+        fi
+      shell: bash
