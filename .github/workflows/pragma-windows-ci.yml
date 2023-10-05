@@ -17,18 +17,20 @@ jobs:
         rm pragma.zip
       shell: bash
 
-    - uses: mxschmitt/action-tmate@v3.17
-      name: CI
+    - name: Create Lua Test File
+      run: |
+        echo 'print("Test")\nconsole.run("exit")' > pragma/lua/test.lua
+      shell: bash
 
-    #- name: Run Pragma Server
-    #  run: |
-    #    chmod +x pragma_server.exe
-    #    ./pragma_server.exe +map "test_physics" +"exit"
-    #    exit_code=$?
-    #    if [ $exit_code -eq 0 ]; then
-    #      echo "Pragma Server ran successfully"
-    #    else
-    #      echo "Pragma Server exited with code $exit_code"
-    #      exit 1
-    #    fi
-    #  shell: bash
+    - name: Run Pragma Server
+      run: |
+        chmod +x pragma_server.exe
+        ./pragma_server.exe +map "test_physics" +"exit" +"lua_exec test_sv.lua"
+        exit_code=$?
+        if [ $exit_code -eq 0 ]; then
+          echo "Pragma Server ran successfully"
+        else
+          echo "Pragma Server exited with code $exit_code"
+          exit 1
+        fi
+      shell: bash
