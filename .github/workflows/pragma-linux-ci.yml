@@ -1,0 +1,26 @@
+name: Pragma Workflow
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Download Pragma
+      run: |
+        curl -LO https://github.com/Silverlan/pragma/releases/download/nightly/pragma.tar.gz
+        tar -xzf pragma.tar.gz
+        rm pragma.zip
+      shell: bash
+
+    - name: Create Lua Test File
+      run: |
+        echo 'print("Test")' > lua/test.lua
+      shell: bash
+
+    - name: Set up tmate session
+      uses: mxschmitt/action-tmate@v3.14
