@@ -16,8 +16,8 @@ jobs:
         curDir=$(pwd)
         
         # Check if pragma/install directory exists
-        if [ -d "/c/" ]; then
-          cd /c/
+        if [ -d "/d" ]; then
+          cd /d
           
           # Generate a tree structure of the directory and save it to a text file
           tree --dirsfirst > "$curDir/sometextfile.txt"
