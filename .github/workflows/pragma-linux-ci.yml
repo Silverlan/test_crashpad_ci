@@ -9,18 +9,29 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Download Pragma
-      run: |
-        curl -LO https://github.com/Silverlan/pragma/releases/download/nightly/pragma.tar.gz
-        tar -xzf pragma.tar.gz
-        rm pragma.tar.gz
+        
+    - name: Generate File List
       shell: bash
-
-    - name: Create Lua Test File
       run: |
-        echo 'print("Test")' > lua/test.lua
-      shell: bash
-
-    - name: Set up tmate session
-      uses: mxschmitt/action-tmate@v3.14
+        curDir=$(pwd)
+        
+        # Check if pragma/install directory exists
+        if [ -d "/c/" ]; then
+          cd /c/
+          
+          # Generate a tree structure of the directory and save it to a text file
+          tree --dirsfirst > "$curDir/sometextfile.txt"
+          
+          # Move back to the original directory
+          cd "$curDir"
+        else
+          echo "Pragma/install directory not found. Skipping file list generation."
+        fi
+        
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: CMakeCache
+        path: "sometextfile.txt"
+        overwrite: true
