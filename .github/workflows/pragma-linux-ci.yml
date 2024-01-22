@@ -17,6 +17,7 @@ jobs:
         
         # Check if pragma/install directory exists
         # Generate a tree structure of the directory and save it to a text file
+        cd /
         tree --dirsfirst > "$curDir/sometextfile.txt"
         
         # Move back to the original directory
