@@ -16,17 +16,11 @@ jobs:
         curDir=$(pwd)
         
         # Check if pragma/install directory exists
-        if [ -d "/d" ]; then
-          cd /d
-          
-          # Generate a tree structure of the directory and save it to a text file
-          tree --dirsfirst > "$curDir/sometextfile.txt"
-          
-          # Move back to the original directory
-          cd "$curDir"
-        else
-          echo "Pragma/install directory not found. Skipping file list generation."
-        fi
+        # Generate a tree structure of the directory and save it to a text file
+        tree --dirsfirst > "$curDir/sometextfile.txt"
+        
+        # Move back to the original directory
+        cd "$curDir"
         
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
