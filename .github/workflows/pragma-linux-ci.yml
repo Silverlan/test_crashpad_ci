@@ -13,15 +13,20 @@ jobs:
     - name: Generate File List
       shell: bash
       run: |
+        git clone https://github.com/ValveSoftware/GameNetworkingSockets.git
+        cd GameNetworkingSockets
+        git reset --hard 505c697d0abef5da2ff3be35aa4ea3687597c3e9
+        sudo apt install libssl-dev
+        sudo apt install libprotobuf-dev protobuf-compiler
+        mkdir build
+        cd build
+        cmake -G Ninja ..
+        ninja
+        
+        echo "ALL FILES:"
+        ls -R
+        
         curDir=$(pwd)
-        
-        # Check if pragma/install directory exists
-        # Generate a tree structure of the directory and save it to a text file
-        cd /
-        sudo tree --dirsfirst > "$curDir/sometextfile.txt"
-        
-        # Move back to the original directory
-        cd "$curDir"
         
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
