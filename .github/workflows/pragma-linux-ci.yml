@@ -18,6 +18,7 @@ jobs:
         git reset --hard 505c697d0abef5da2ff3be35aa4ea3687597c3e9
         sudo apt install libssl-dev
         sudo apt install libprotobuf-dev protobuf-compiler
+        sudo apt-get install -y ninja-build
         mkdir build
         cd build
         cmake -G Ninja ..
