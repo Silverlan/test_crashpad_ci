@@ -1,4 +1,4 @@
-name: Pragma Workflow
+name: Windows
 
 on: [push]
 
