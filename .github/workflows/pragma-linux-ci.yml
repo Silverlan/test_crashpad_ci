@@ -19,9 +19,9 @@ jobs:
 
         mkdir ~/crashpad
         cd ~/crashpad
-        fetch crashpad
+        $curDir/fetch crashpad
 
         cd ~/crashpad/crashpad
-        gn gen out/Default
+        $curDir/gn gen out/Default
 
         ninja -C out/Default
