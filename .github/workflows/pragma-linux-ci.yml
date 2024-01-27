@@ -13,8 +13,9 @@ jobs:
     - name: Build Crashpad
       shell: bash
       run: |
+        curDir=$(pwd)
         git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 
-        sudo echo "export PATH=/path/to/depot_tools:$PATH" >> ~/.bashrc
+        sudo echo "export PATH=$curDir:$PATH" >> ~/.bashrc
 
         mkdir ~/crashpad
         cd ~/crashpad
