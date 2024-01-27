@@ -10,18 +10,27 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     
-    - name: Build Crashpad
+    - name: Installing depot_tools
       shell: bash
       run: |
         curDir=$(pwd)
         git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 
         setx path "%path%;C:\path\to\depot_tools"
-
+        
+    - name: Initial Checkout
+      shell: bash
+      run: |
         mkdir crashpad
         cd crashpad
         $curDir/depot_tools/fetch crashpad
-
+        
+    - name: Generating Build Configuration
+      shell: bash
+      run: |
         $curDir/depot_tools/gn gen out/Default
 
+    - name: Building with Ninja
+      shell: bash
+      run: |
         ninja -C out/Default
     
