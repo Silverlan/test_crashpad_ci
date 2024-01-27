@@ -28,11 +28,18 @@ jobs:
         ls -R
         
         curDir=$(pwd)
-        
+
+    - name: Copy binaries
+      shell: bash
+      run: |
+        mkdir artifacts
+        cp /usr/lib/x86_64-linux-gnu/libcrypto.so artifacts/
+        cp /usr/lib/x86_64-linux-gnu/libprotobuf.so artifacts/
+
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: CMakeCache
-        path: "sometextfile.txt"
+        path: "artifacts"
         overwrite: true
