@@ -17,11 +17,11 @@ jobs:
         git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 
         sudo echo "export PATH=$curDir:$PATH" >> ~/.bashrc
 
-        mkdir ~/crashpad
-        cd ~/crashpad
-        $curDir/fetch crashpad
+        mkdir crashpad
+        cd crashpad
+        $curDir/depot_tools/fetch crashpad
 
         cd ~/crashpad/crashpad
-        $curDir/gn gen out/Default
+        $curDir/depot_tools/gn gen out/Default
 
         ninja -C out/Default
