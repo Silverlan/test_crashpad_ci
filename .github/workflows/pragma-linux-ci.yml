@@ -21,7 +21,6 @@ jobs:
         cd crashpad
         $curDir/depot_tools/fetch crashpad
 
-        cd crashpad/crashpad
         $curDir/depot_tools/gn gen out/Default
 
         ninja -C out/Default

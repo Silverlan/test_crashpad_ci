@@ -1,5 +1,7 @@
 name: Pragma Workflow
 
+on: [push]
+
 jobs:
   build:
     runs-on: windows-latest
@@ -8,34 +10,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     
-    - name: Download Pragma
-      run: |
-        curl -LO https://github.com/Silverlan/pragma/releases/download/nightly/pragma.zip
-        unzip pragma.zip
-        rm pragma.zip
-      shell: bash
-
-    - name: Create Lua Test File
-      run: |
-        echo 'print("Test") console.run("exit")' > lua/test.lua
-      shell: bash
-
-    - name: Run Pragma Server
+    - name: Build Crashpad
       shell: bash
       run: |
-        chmod +x pragma_server.exe
-        ./pragma_server.exe -log 2 2 +map "test_physics" +"lua_exec test.lua"
-        EXIT_CODE=$?
-        # Check the exit code
-        if [ $EXIT_CODE -eq 0 ]; then
-          echo "Pragma Server executed successfully."
-        else
-          echo "Pragma Server execution failed with exit code $EXIT_CODE."
-        fi
+        curDir=$(pwd)
+        git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 
+        setx path "%path%;C:\path\to\depot_tools"
 
-    - name: Upload log_server.txt
-      uses: actions/upload-artifact@v2
-      with:
-        name: log_server
-        path: log_server.txt
+        mkdir crashpad
+        cd crashpad
+        $curDir/depot_tools/fetch crashpad
+
+        $curDir/depot_tools/gn gen out/Default
+
+        ninja -C out/Default
     
