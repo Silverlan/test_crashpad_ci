@@ -22,12 +22,12 @@ jobs:
       run: |
         mkdir crashpad
         cd crashpad
-        $(pwd)/depot_tools/fetch crashpad
+        ../depot_tools/fetch crashpad
         
     - name: Generating Build Configuration
       shell: bash
       run: |
-        $(pwd)/depot_tools/gn gen out/Default
+        ./depot_tools/gn gen out/Default
 
     - name: Building with Ninja
       shell: bash
