@@ -10,36 +10,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
         
-    - name: Generate File List
+    - name: Build Crashpad
       shell: bash
       run: |
-        git clone https://github.com/ValveSoftware/GameNetworkingSockets.git
-        cd GameNetworkingSockets
-        git reset --hard 505c697d0abef5da2ff3be35aa4ea3687597c3e9
-        sudo apt install libssl-dev
-        sudo apt install libprotobuf-dev protobuf-compiler
-        sudo apt-get install -y ninja-build
-        mkdir build
-        cd build
-        cmake -G Ninja ..
-        ninja
-        
-        echo "ALL FILES:"
-        ls -R
-        
-        curDir=$(pwd)
+        git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 
+        sudo echo "export PATH=/path/to/depot_tools:$PATH" >> ~/.bashrc
 
-    - name: Copy binaries
-      shell: bash
-      run: |
-        mkdir artifacts
-        cp /usr/lib/x86_64-linux-gnu/libcrypto.so artifacts/
-        cp /usr/lib/x86_64-linux-gnu/libprotobuf.so artifacts/
+        mkdir ~/crashpad
+        cd ~/crashpad
+        fetch crashpad
 
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: CMakeCache
-        path: "artifacts"
-        overwrite: true
+        cd ~/crashpad/crashpad
+        gn gen out/Default
+
+        ninja -C out/Default
