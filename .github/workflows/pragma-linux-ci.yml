@@ -20,7 +20,7 @@ jobs:
     - name: Initial Checkout
       shell: bash
       run: |
-        sudo echo "export PATH=$(pwd)/depot_tools:$PATH" >> ~/.bashrc
+        echo "$(pwd)/depot_tools" >> $GITHUB_PATH
         mkdir crashpad
         cd crashpad
         ../depot_tools/fetch crashpad
@@ -28,11 +28,11 @@ jobs:
     - name: Generating Build Configuration
       shell: bash
       run: |
-        sudo echo "export PATH=$(pwd)/depot_tools:$PATH" >> ~/.bashrc
+        echo "$(pwd)/depot_tools" >> $GITHUB_PATH
         ./depot_tools/gn gen out/Default
 
     - name: Building with Ninja
       shell: bash
       run: |
-        sudo echo "export PATH=$(pwd)/depot_tools:$PATH" >> ~/.bashrc
+        echo "$(pwd)/depot_tools" >> $GITHUB_PATH
         ninja -C out/Default
