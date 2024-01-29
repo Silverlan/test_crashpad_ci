@@ -32,10 +32,11 @@ jobs:
     - name: Generating Build Configuration
       shell: bash
       run: |
-        cd crashpad
+        cd crashpad/crashpad
         gn gen out/Default
 
     - name: Building with Ninja
       shell: bash
       run: |
+        cd crashpad/crashpad
         ninja -C out/Default
