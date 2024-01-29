@@ -32,7 +32,8 @@ jobs:
     - name: Generating Build Configuration
       shell: bash
       run: |
-        ./depot_tools/gn gen out/Default
+        cd crashpad
+        ../depot_tools/gn gen out/Default
 
     - name: Building with Ninja
       shell: bash
