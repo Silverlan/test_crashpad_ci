@@ -13,7 +13,7 @@ jobs:
     - name: Install curl headers
       shell: bash
       run: |
-        sudo apt-get install libcurl-dev
+        sudo apt-get install libcurl4-gnutls-dev
       
         
     - name: Installing depot_tools
