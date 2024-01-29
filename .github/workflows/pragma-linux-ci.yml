@@ -9,6 +9,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      
+    - name: Install curl headers
+      shell: bash
+      run: |
+        sudo apt-get install libcurl4-gnutls-dev
+      
         
     - name: Installing depot_tools
       shell: bash
@@ -32,10 +38,11 @@ jobs:
     - name: Generating Build Configuration
       shell: bash
       run: |
-        cd crashpad
+        cd crashpad/crashpad
         gn gen out/Default
 
     - name: Building with Ninja
       shell: bash
       run: |
+        cd crashpad/crashpad
         ninja -C out/Default
