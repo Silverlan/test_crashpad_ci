@@ -16,11 +16,15 @@ jobs:
         curDir=$(pwd)
         git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 
         sudo echo "export PATH=$curDir/depot_tools:$PATH" >> ~/.bashrc
+
+    - name: Add depot_tools to PATH
+      shell: bash
+      run: |
+        echo "$(pwd)/depot_tools" >> $GITHUB_PATH
         
     - name: Initial Checkout
       shell: bash
       run: |
-        echo "$(pwd)/depot_tools" >> $GITHUB_PATH
         mkdir crashpad
         cd crashpad
         ../depot_tools/fetch crashpad
@@ -28,11 +32,9 @@ jobs:
     - name: Generating Build Configuration
       shell: bash
       run: |
-        echo "$(pwd)/depot_tools" >> $GITHUB_PATH
         ./depot_tools/gn gen out/Default
 
     - name: Building with Ninja
       shell: bash
       run: |
-        echo "$(pwd)/depot_tools" >> $GITHUB_PATH
         ninja -C out/Default
