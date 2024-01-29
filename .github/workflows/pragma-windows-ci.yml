@@ -15,22 +15,24 @@ jobs:
       run: |
         curDir=$(pwd)
         git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 
-        setx path "%path%;C:\path\to\depot_tools"
+        echo "$(pwd)/depot_tools" >> $GITHUB_PATH
         
     - name: Initial Checkout
       shell: bash
       run: |
         mkdir crashpad
         cd crashpad
-        ../depot_tools/fetch crashpad
+        fetch crashpad
         
     - name: Generating Build Configuration
       shell: bash
       run: |
-        ./depot_tools/gn gen out/Default
+        cd crashpad/crashpad
+        gn gen out/Default
 
     - name: Building with Ninja
       shell: bash
       run: |
+        cd crashpad/crashpad
         ninja -C out/Default
     
