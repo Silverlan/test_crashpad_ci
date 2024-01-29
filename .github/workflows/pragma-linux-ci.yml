@@ -9,6 +9,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      
+    - name: Install curl headers
+      shell: bash
+      run: |
+        sudo apt-get install libcurl-dev
+      
         
     - name: Installing depot_tools
       shell: bash
