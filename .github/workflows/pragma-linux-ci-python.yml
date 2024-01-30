@@ -38,6 +38,7 @@ jobs:
       shell: python
       run: |
         import subprocess
+        import os
         subprocess.run(["mkdir", "crashpad"])
         os.chdir("crashpad")
         subprocess.run(["fetch", "crashpad"])
