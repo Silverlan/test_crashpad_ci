@@ -2,6 +2,10 @@ name: Windows
 
 on: [push]
 
+concurrency:
+  group: environment-win-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: windows-latest
