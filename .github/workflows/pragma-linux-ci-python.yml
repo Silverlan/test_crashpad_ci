@@ -20,43 +20,47 @@ jobs:
         import subprocess
         subprocess.run(["sudo", "apt-get", "install", "libcurl4-gnutls-dev"])
       
-    - name: Installing depot_tools using Python
-      shell: python
-      run: |
+    #- name: Installing depot_tools using Python
+    #  shell: python
+    #  run: |
         import subprocess
         import os
         curDir = os.getcwd()
         subprocess.run(["git", "clone", "https://chromium.googlesource.com/chromium/tools/depot_tools.git"])
         os.environ["PATH"] = f"{curDir}/depot_tools:{os.environ['PATH']}"
         subprocess.run(["echo", f"export PATH={curDir}/depot_tools:$PATH", ">>", "~/.bashrc"])
+        os.chdir(curDir)
 
-    - name: Add depot_tools to PATH using Python
-      shell: python
-      run: |
+    #- name: Add depot_tools to PATH using Python
+    #  shell: python
+    #  run: |
         import subprocess
         import os
-        curDir = os.getcwd()
         subprocess.run(["echo", f"{curDir}/depot_tools", ">>", "$GITHUB_PATH"])
+        os.chdir(curDir)
         
-    - name: Initial Checkout using Python
-      shell: python
-      run: |
+    #- name: Initial Checkout using Python
+    #  shell: python
+    #  run: |
         import subprocess
         import os
         subprocess.run(["mkdir", "crashpad"])
         os.chdir("crashpad")
         subprocess.run(["fetch", "crashpad"])
+        os.chdir(curDir)
         
-    - name: Generating Build Configuration using Python
-      shell: python
-      run: |
+    #- name: Generating Build Configuration using Python
+    #  shell: python
+    #  run: |
         import subprocess
         subprocess.run(["cd", "crashpad/crashpad"])
         subprocess.run(["gn", "gen", "out/Default"])
+        os.chdir(curDir)
 
-    - name: Building with Ninja using Python
-      shell: python
-      run: |
+    #- name: Building with Ninja using Python
+    #  shell: python
+    #  run: |
         import subprocess
         subprocess.run(["cd", "crashpad/crashpad"])
         subprocess.run(["ninja", "-C", "out/Default"])
+        os.chdir(curDir)
