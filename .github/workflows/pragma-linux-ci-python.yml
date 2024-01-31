@@ -41,11 +41,11 @@ jobs:
         os.chdir(curDir)
 
         import subprocess
-        subprocess.run(["cd", "crashpad/crashpad"])
+        os.chdir("crashpad/crashpad")
         subprocess.run(["gn", "gen", "out/Default"])
         os.chdir(curDir)
 
         import subprocess
-        subprocess.run(["cd", "crashpad/crashpad"])
+        os.chdir("crashpad/crashpad")
         subprocess.run(["ninja", "-C", "out/Default"])
         os.chdir(curDir)
